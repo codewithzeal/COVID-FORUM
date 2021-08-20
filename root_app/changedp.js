@@ -1,4 +1,4 @@
-
+const { urlencoded } = require('body-parser');
 var express=require('express');
 var app=express.Router();
 app.use(express.urlencoded({extended:true}));
