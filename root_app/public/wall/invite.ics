@@ -1,0 +1,35 @@
+BEGIN:VCALENDAR
+PRODID:-//Invite
+VERSION:2.0
+X-WR-RELCALID:0763aaca-1068-11eb-b984-02e7c77668a4
+METHOD:REQUEST
+BEGIN:VEVENT
+DTSTART:20201017T113000Z
+DTSTAMP:20201017T113000Z
+DTEND:20201017T114500Z
+LOCATION: https://zoom.us/j/99660398835?pwd=NytKL1VtbHNQQUJRbmlZdEdGbCt0QT09
+UID:0763aaca-1068-11eb-b984-02e7c77668a4
+SEQUENCE:1
+STATUS:REQUEST
+DESCRIPTION;ENCODING=ESCAPED-CHAR:
+X-ALT-DESC;FMTTYPE=text/html:Kunal  is inviting you to a scheduled Zoom meeting.
+
+            Topic: Counselling with Naman
+            Start Time: Oct 17th 2020 05:00 PM IST
+
+            Join Zoom Meeting
+            https://zoom.us/j/99660398835?pwd=NytKL1VtbHNQQUJRbmlZdEdGbCt0QT09
+
+            Meeting ID: 99660398835
+            Password: 6061894418
+            
+SUMMARY:Counselling with Naman
+ORGANIZER:MAILTO:kunal@scaler.com
+ATTENDEE;CN="namangns1@gmail.com";RSVP=TRUE:mailto:namangns1@gmail.com
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+END:VEVENT
+END:VCALENDAR

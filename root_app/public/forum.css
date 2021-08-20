@@ -1,0 +1,14 @@
+*{
+    margin:0px;
+    padding: 0px;
+}
+#ask
+{
+    width: 100%;
+    margin:0px;
+    background-color:goldenrod;
+    left:0px;
+    clear: both;
+    position: fixed;
+    z-index: 4;
+}
