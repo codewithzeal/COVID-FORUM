@@ -5,7 +5,7 @@ var log={
     
     var config=
     {
-        host: 'your_host',
+        host: 'localhost',
         user: 'your_username',
         password: 'your_password',
         database: 'project'
