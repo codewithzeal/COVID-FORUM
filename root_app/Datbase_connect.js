@@ -5,9 +5,9 @@ var log={
     
     var config=
     {
-        host: 'localhost',
-        user: 'naman',
-        password: 'inaman123',
+        host: 'your_host',
+        user: 'your_username',
+        password: 'your_password',
         database: 'project'
     }
     const db=mysql.createConnection(config);
