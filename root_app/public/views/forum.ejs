@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="forum.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alfa+Slab+One">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,900">
+    <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" href="assets/css/smoothproducts.css">
+    <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+    <script src="assets/js/smoothproducts.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="validate.js"></script>
+    <script>
+        mresult=[];
+        page=1
+        function getCard()
+        {
+            $.ajax({
+            url: '/getmentor',
+        method: 'POST',
+        contentType: 'application/json',
+            success: function(response) {
+                mresult=response;
+                showcards();
+        }
+        });
+        }
+
+
+function showcards()
+{
+    i=0
+            for(t=0;t<mresult.length;t++)
+            {
+                
+                if(mresult[t].solution)
+                {
+                var div=document.createElement("div");
+                div.setAttribute("class","col-sm-12 mb-3");
+                div.setAttribute("id","div"+i);
+                document.getElementById("holder").appendChild(div);
+                var div1=document.createElement("div");
+                div1.setAttribute("class","row mt-3 mb-3");
+                div1.setAttribute("id","div"+(i+1));
+                document.getElementById("div"+i).appendChild(div1);
+                var div2=document.createElement("div");
+                div2.setAttribute("class","col-sm-3");
+                div2.setAttribute("id","div"+(i+2));
+                document.getElementById("div"+(i+1)).appendChild(div2);
+                div3=document.createElement("div");
+                div3.setAttribute("class","col-sm-6");
+                div3.setAttribute("id","div"+(i+3));
+                document.getElementById("div"+(i+1)).appendChild(div3);
+                div4=document.createElement("div");
+                div4.setAttribute("class","card ml-3");
+                div4.setAttribute("id","div"+(i+4));
+                document.getElementById("div"+(i+3)).appendChild(div4);
+                h5=document.createElement("h5");
+                document.getElementById("div"+(i+4)).appendChild(h5);
+                h5.innerHTML=mresult[t].title;
+                h5.setAttribute("class","card-header")
+                h5.setAttribute("style","background-color: rgb(221, 48, 48);")
+                div5=document.createElement("div");
+                document.getElementById("div"+(i+4)).appendChild(div5);
+                div5.setAttribute("class","card-body");
+                div5.setAttribute("style","background-color: rgb(233, 216, 194);")
+                div5.setAttribute("id","div"+(i+5));
+                question=document.createElement("h5");
+                document.getElementById("div"+(i+5)).appendChild(question);
+                question.innerHTML=mresult[t].question;
+                textarea=document.createElement("p");
+                document.getElementById("div"+(i+5)).appendChild(textarea);
+                textarea.setAttribute("style","resize: none;width: 100%;height: 20px;");
+                textarea.setAttribute("id","solution"+i);
+                textarea.innerHTML=mresult[t].solution;
+                button=document.createElement("button");
+                document.getElementById("div"+(i+5)).appendChild(button);
+                button.setAttribute("class","btn btn-success");
+                button.setAttribute("onclick","expand('"+i+"')");
+                button.setAttribute("id","btn"+i);
+                button.innerHTML="Read More";
+                i=i+6;
+
+                }
+        }
+}
+
+function expand(id)
+{
+    var a=document.getElementById('solution'+id).offsetHeight;
+        if(a==20)
+        {
+            document.getElementById("btn"+id).value="Read Less";
+            document.getElementById('solution'+id).style.height="auto";
+        }
+        else
+        {
+            document.getElementById("btn"+id).value="Read More";
+            document.getElementById('solution'+id).style.height="20px";
+        }
+}
+
+    </script>
+</head>
+<body onload="getCard()">
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+        <div class="container-fluid"><a class="navbar-brand logo" href="#" style="font-family: Raleway, sans-serif;clear: both;">SHARE IT OUT</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div
+                class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="/welcome">Home</a></li>
+					<li class="nav-item" role="presentation" id="login"><a class="nav-link active" href="/login">Login</a></li>
+					<li class="nav-item" role="presentation" id="signup"><a class="nav-link active" href="/Home">Signup</a></li>
+					<li class="nav-item" role="presentation"><a class="nav-link active" href="/forum">FORUM</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="/wall">WALL</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="http://localhost:4000/" target="_blank">Confrence</a></li>
+                    <li class="nav-item" role="presentation" ><a class="nav-link active" href="/postHere" id="make">MakePost</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="/destroy">Logout</a></li>
+                </ul>
+        </div>
+        </div>
+    </nav>
+    <main class="page landing-page mt-3">
+        <div class="row mt-3">
+            <div class="col-sm-3" style="background-color: goldenrod;"></div>
+            <div class="col-sm-6" style="background-color: goldenrod;">
+                    
+                <div class="form-group p-3">
+                    <h1>Have a doubt ask our experts</h1>
+                    <input type="text" class="form-control m-1" id="title" placeholder="Question title*">
+            <textarea class="form-control m-1" id="body" placeholder="Question Body*" style="height: 200px;resize: none;"></textarea>
+            <button class="btn btn-success" onclick="makePost()">Ask</button>
+        </div>
+        </div>
+        <div class="col-sm-3" style="background-color: goldenrod;"></div>
+    </div>
+
+    <!--This is Heading for trending questions the cards-->
+    <div class="row mt-3">
+        <div class="col-sm-12" style="color: blueviolet;">
+           <center> <h1>Our trending Questions</h1>
+            <hr style="background-color: rgb(56, 184, 124);">
+            </center>
+        </div>
+    </div>
+
+    <!--This is the card section-->
+
+    <div id="holder">
+        
+    </div>
+
+
+
+
+
+
+    </main>
+</body>
+<script>
+    x= "<%= username %>";
+    if(x)
+    {
+        document.getElementById("login").style.display="none";
+        document.getElementById("signup").style.display="none";
+        
+    }
+</script>
+</html>

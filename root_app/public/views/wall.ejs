@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="forum.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alfa+Slab+One">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,900">
+    <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" href="assets/css/smoothproducts.css">
+    <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+    <link rel="stylesheet" href="/index.css">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+    <script src="assets/js/smoothproducts.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+
+    <style>
+        *{
+            margin: 0%;
+            padding: 0%;
+        }
+        #cover
+        {
+            background-image: url("co.jpg");
+            height:400px;
+            background-repeat:no-repeat;
+            background-size:cover;
+            background-position: center center;
+        }
+        #image1{
+            margin: 0;
+            position: relative;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -75%);
+          border-radius: 50%;
+          width: 200px;
+          height: 200px;
+          clear: both;
+        }
+        #change
+        {
+            position: absolute;
+            bottom: 4px;
+            left:11px;
+            
+        }
+        .cards
+        {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+        .cards1
+        {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+@media only screen and (max-width: 768px) 
+    {
+  /* For mobile phones: */
+    #image1
+        {
+            margin: 0;
+            position: relative;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -75%);
+            clear: both;
+        }
+        #cover
+        {
+            background-size: cover;
+           background-position:center center;
+           height: 350px;
+        }
+        #edit
+        {
+            width:30px;
+            height:30px;
+            visibility: visible;
+            top:-60%;
+        }
+        .cards
+        {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin-left:auto ;
+            margin-right: auto;
+            left:6px;
+            position: absolute;
+        }
+        .cards1
+        {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin-left:auto ;
+            margin-right: auto;
+            left:6px;
+            position: absolute;
+        }
+    }
+</style>
+<script>
+src=""
+profiledetail={}
+result={};
+page=1;
+limit=2;
+function callPost()
+{
+   $.ajax({
+      url: '/wall',
+      method: 'POST',
+      contentType: 'application/json',
+      success: function(response) {
+          result=response;
+         getProfile();
+      }
+  });
+}
+
+function getProfile()
+{
+    $.ajax({
+      url: '/detail',
+      method: 'POST',
+      contentType: 'application/json',
+      success: function(response) {
+          profiledetail=response;
+         show();
+      }
+  });
+}
+function show()
+{
+    t=1
+    document.getElementById("hostname").innerHTML=profiledetail[0].name;
+    start=(page-1)*limit;
+    document.getElementById("holder").innerHTML=" ";
+    document.getElementById("image1").src="/"+profiledetail[0].profilePic;
+    src="/"+profiledetail[0].profilePic;
+    end=page*limit
+    for(i=start;i<result.length&&i<end;i++)
+    {
+        var div=document.createElement("div");
+        div.setAttribute("class","card pt-2 mt-3");
+        div.setAttribute("id","div"+t)
+        div.setAttribute("style","width:100%;background-color:rgb(178,199,230);")
+        img=document.createElement("img");
+        img.setAttribute("id","pic"+t);
+        img.setAttribute("class","card-img-top");
+        img.setAttribute("height","300px");
+        img.setAttribute("src","/"+result[i].file)
+        cbody=document.createElement("div");
+        cbody.setAttribute("class","card-body");
+        cbody.setAttribute("id","body"+t)
+        document.getElementById("holder").appendChild(div);
+        document.getElementById("div"+t).appendChild(img);
+        document.getElementById("div"+t).appendChild(cbody);
+        title=document.createElement("h5");
+        title.setAttribute("id","h"+t);
+        document.getElementById("body"+t).appendChild(title);
+        document.getElementById("h"+t).innerHTML=result[i].title
+        text=document.createElement("p");
+        text.setAttribute("id","txt"+t);
+        text.setAttribute("style","height: 20px;overflow: hidden;");
+        document.getElementById("body"+t).appendChild(text);
+        document.getElementById("txt"+t).innerHTML=result[i].text;
+        btn=document.createElement("input");
+        btn.setAttribute("type","button");
+        document.getElementById("body"+t).appendChild(btn);
+        btn.setAttribute("onclick","expand('"+t+"')");
+        btn.setAttribute("value","read more");
+        btn.setAttribute("class","btn btn-primary");
+        btn.setAttribute("id","btn"+t)
+        br=document.createElement("br");
+        document.getElementById("holder").appendChild(br.cloneNode());
+        document.getElementById("holder").appendChild(br.cloneNode());
+        t++;
+    }
+    prevbtn=document.createElement("input");
+        prevbtn.setAttribute("type","button");
+        prevbtn.setAttribute("class","btn btn-primary");
+        prevbtn.setAttribute("value","previous");
+        document.getElementById("holder").appendChild(prevbtn);
+        prevbtn.setAttribute("onclick","prevPage()");
+        nextbtn=document.createElement("input");
+        nextbtn.setAttribute("type","button");
+        nextbtn.setAttribute("class","btn btn-primary ml-3");
+        nextbtn.setAttribute("value","next")
+        document.getElementById("holder").appendChild(nextbtn);
+        nextbtn.setAttribute("onclick","nextPage()");
+}
+    function change()
+    {
+        document.getElementById("image1").src="edit.jpg";
+    }
+    function dechange()
+    {
+        document.getElementById("image1").src=src;
+    }
+function expand(id)
+{
+    var a=document.getElementById("txt"+id).offsetHeight;
+        if(a==20)
+        {
+            document.getElementById("btn"+id).value="Read Less";
+            document.getElementById("txt"+id).style.height="auto";
+        }
+        else
+        {
+            document.getElementById("btn"+id).value="Read More";
+            document.getElementById("txt"+id).style.height="20px";
+        }
+}
+function nextPage()
+    {
+        page++;
+        if((page*limit-1)>result.length)
+        {
+            page--;
+            return;
+        }
+        else
+        show();
+    }
+    function prevPage()
+    {
+        page--;
+        if((page-1)*limit<0)
+        {
+            page++;
+            return;
+        }
+        else
+        show();
+    }
+</script>
+</head>
+<body onload="callPost()">
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+        <div class="container-fluid"><a class="navbar-brand logo" href="#" style="font-family: Raleway, sans-serif;clear: both;">SHARE IT OUT</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div
+                class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="/welcome">Home</a></li>
+					<li class="nav-item" role="presentation" id="login"><a class="nav-link active" href="/login">Login</a></li>
+					<li class="nav-item" role="presentation" id="signup"><a class="nav-link active" href="/Home">Signup</a></li>
+					<li class="nav-item" role="presentation"><a class="nav-link active" href="/forum">FORUM</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="/wall">WALL</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="http://localhost:4000/" target="_blank">Confrence</a></li>
+                    <li class="nav-item" role="presentation" id="make"><a class="nav-link active" href="/postHere" >MakePost</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="/destroy">Logout</a></li>
+                </ul>
+        </div>
+        </div>
+    </nav>
+    <br><br><br><br><br>
+    <main class="page landing-page" style="margin: 0px;">
+    <div class="row" style="background-color: cadetblue;" id="cover">
+
+        <!--This one is for your profile display-->
+        <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <input type="file" id="image" style="display: none;">
+                <img src="" alt="" class="img-responsive" onmouseover="change()" id="image1" onmouseout="dechange()" onclick="changeDP()">
+                <img src="edit.jpg" style="visibility: hidden;" id="edit">
+            </div>
+            <div class="col-sm-4">
+                
+            </div>
+    </div>
+
+
+
+
+    <div class="row bg-dark" style="padding: 10px;background-color: cadetblue;text-align: center;color: cornsilk;">
+
+        <!--This one is for your profile display-->
+        <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <h3 id="hostname"></h3>
+                <hr color="RED">
+            </div>
+            <div class="col-sm-4">
+
+            </div>
+    </div>
+
+<br>
+    
+
+<div class="row" style="margin-top: 50px;">
+       
+       <div class="col-sm-12" style="text-align: center;justify-content: center;">
+           <h1>
+               BLOG ACTIVITY
+               <hr color="black">
+           </h1>
+       </div>
+    </div>
+
+<!-- CARD SECTION OF PAGE FOR BLOG-->
+<div class="row" style="margin: 0px;padding: 0px;left: 0px;background-color: rgb(212, 224, 155);" >
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6 px-0" style="left: 0px; margin: 0px;position: relative;padding: 0px;" id="holder">
+</div>
+<div class="col-sm-3"></div>
+</div>
+
+
+<div class="row" style="margin-top: 50px;" id="mentor">
+       
+    <div class="col-sm-12" style="text-align: center;justify-content: center;">
+        <h1>
+            Answer the doubts
+            <hr color="black">
+        </h1>
+    </div>
+ </div>
+
+
+
+ <div class="row" style="margin: 0px;padding: 0px;left: 0px;background-color: rgb(212, 224, 155);" id="doubtscard">
+    
+    
+    </div>
+
+
+    </main>
+<script>
+    mresult={}
+    x= "<%= username %>";
+    if(x)
+    {
+        document.getElementById("login").style.display="none";
+        document.getElementById("signup").style.display="none";
+    }
+function changeDP()
+{
+    $("input[id='image']").click();
+}
+jQuery("input#image").change(function () {
+    var formData = new FormData();
+        formData.append('image', document.getElementById('image').files[0]);
+        $.ajax({
+            type: "POST",
+            url: "/changedp",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(r){
+                callPost();
+            },
+            error: function (e) {
+                console.log("some error", e);
+            }
+        });
+});
+        y= "<%= Category%>";
+        if(y)
+        {
+             getQuestion();
+        }
+        else
+        {
+            document.getElementById("mentor").style.display="none";
+            document.getElementById("doubtscard").style.display="none";
+        }
+        
+        function getQuestion()
+        {
+            $.ajax({
+            url: '/getmentor',
+        method: 'POST',
+        contentType: 'application/json',
+            success: function(response) {
+                mresult=response;
+                showMentor();
+        }
+        });
+        }
+
+        function showMentor()
+        {
+            i=0
+            document.getElementById("doubtscard").innerHTML="";
+            for(t=0;t<mresult.length;t++)
+            {
+                if(!mresult[t].solution)
+                {
+                var div=document.createElement("div");
+                div.setAttribute("class","col-sm-12 mb-3");
+                div.setAttribute("id","div"+i);
+                document.getElementById("doubtscard").appendChild(div);
+                var div1=document.createElement("div");
+                div1.setAttribute("class","row mt-3 mb-3");
+                div1.setAttribute("id","div"+(i+1));
+                document.getElementById("div"+i).appendChild(div1);
+                var div2=document.createElement("div");
+                div2.setAttribute("class","col-sm-3");
+                div2.setAttribute("id","div"+(i+2));
+                document.getElementById("div"+(i+1)).appendChild(div2);
+                div3=document.createElement("div");
+                div3.setAttribute("class","col-sm-6");
+                div3.setAttribute("id","div"+(i+3));
+                document.getElementById("div"+(i+1)).appendChild(div3);
+                div4=document.createElement("div");
+                div4.setAttribute("class","card ml-3");
+                div4.setAttribute("id","div"+(i+4));
+                document.getElementById("div"+(i+3)).appendChild(div4);
+                h5=document.createElement("h5");
+                document.getElementById("div"+(i+4)).appendChild(h5);
+                h5.innerHTML=mresult[t].title;
+                h5.setAttribute("class","card-header")
+                h5.setAttribute("style","background-color: rgb(221, 48, 48);")
+                div5=document.createElement("div");
+                document.getElementById("div"+(i+4)).appendChild(div5);
+                div5.setAttribute("class","card-body");
+                div5.setAttribute("style","background-color: rgb(233, 216, 194);")
+                div5.setAttribute("id","div"+(i+5));
+                question=document.createElement("h5");
+                document.getElementById("div"+(i+5)).appendChild(question);
+                question.innerHTML=mresult[t].question;
+                textarea=document.createElement("textarea");
+                document.getElementById("div"+(i+5)).appendChild(textarea);
+                textarea.setAttribute("style","resize: none;width: 100%;height: 200px;");
+                textarea.setAttribute("id","solution"+i);
+                button=document.createElement("button");
+                document.getElementById("div"+(i+5)).appendChild(button);
+                button.setAttribute("class","btn btn-success");
+                button.setAttribute("onclick","PostMentor('solution'+'"+i+"','"+mresult[t].qid+"')");
+                button.innerHTML="Give Solution";
+                i=i+6;
+
+            }
+        }
+    }
+
+        function PostMentor(id,qid)
+        {
+            if(confirm("Are you sure you have checked your solution"))
+            {
+            solution=document.getElementById(id).value.toString();
+            $.ajax({
+        url: '/mentor',
+        method: 'POST',
+        contentType: 'application/json',
+        data:JSON.stringify( {
+                    soln: solution,
+                    qid:qid
+                }),
+            success: function(response) {
+           window.location.reload();
+        }
+        });
+
+    }
+        }
+    </script>
+</body>
+</html>

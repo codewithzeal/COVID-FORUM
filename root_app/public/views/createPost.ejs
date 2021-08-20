@@ -1,0 +1,176 @@
+<html>
+  <head>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </head>
+<style>
+  body {
+    font-size: 16px;
+    line-height: 26px;
+    font-family: "Krub", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #666f74;
+    text-align: left;
+}
+.tt-title-border {
+  border-bottom: 1px solid #e2e7ea;
+  color: #17181d;
+  font-size: 25px;
+  line-height: 26px;
+  font-weight: 500;
+  padding: 0 0 23px 0;
+  margin-bottom: 21px;
+  letter-spacing: 0.01em;
+}
+ .form-group label:not(.error) {
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 600;
+  color: #182730;
+  padding-bottom: 14px;
+  margin-bottom: 0;
+  letter-spacing: 0.01em;
+}
+.form-control {
+    font-family: "Krub", sans-serif;
+    background: #e2e7ea;
+    color: #666f74;
+    font-size: 16px;
+    line-height: 25px;
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: none;
+    width: 100%;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border-radius: 3px;
+    border: 1px solid #e2e7ea;
+    -webkit-transition: border-color 0.2s linear;
+    transition: border-color 0.2s linear;
+
+}
+.tt-note {
+  color: #666f74;
+  font-size: 14px;
+  margin-top: 5px;
+  letter-spacing: 0.01em;
+}
+.pt-editor .pt-title {
+  color: #182730;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 26px;
+  margin: 0;
+  padding: 0 0 12px 0;
+  letter-spacing: 0.01em;
+}
+.btn.btn-secondary:hover {
+  background-color: #333333;
+  color: #ffffff;
+}
+.pt-editor .btn-width-lg {
+  min-width: 160px;
+}
+.btn.btn-secondary {
+  background-color: #2172cd;
+  color: #ffffff;
+}
+
+.pt-editor textarea {
+  height: 169px;
+}
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+.profile-pic{
+    --avatar-size: 5rem; /* avatar size yha se fix kar sakta hai  */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    font-family: sans-serif;
+    justify-content: center;
+    margin: 0;
+  }
+
+.circle {
+  background-color: #ccc;
+  border-radius: 50%;
+  height: var(--avatar-size);
+  text-align: center;
+  width: var(--avatar-size);
+}
+.initials {
+  font-size: calc(var(--avatar-size) / 2); 
+  line-height: 1;
+  position: relative;
+  top: calc(var(--avatar-size) / 4);
+}
+</style>
+  <body>
+    <div class="container">
+      <h1 class="tt-title-border">Create New Topic</h1>
+      <div class="profile-pic">
+        <div class="circle">
+          <span class="initials" id="initials"></span>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="inputTopicTitle">Topic Title</label>  
+        <div class="tt-value-wrapper">
+            <input type="text" name="name" id="title" class="form-control"  placeholder="Subject of your topic" > <!-- title input-->
+        </div>
+        <div class="tt-note">Describe your topic well, while keeping the subject as short as possible.</div>
+    </div>
+
+    <div class="pt-editor">
+        <h6 class="pt-title">Topic Body</h6>
+        <div class="form-group">
+            <textarea name="message" class="form-control" rows="5" placeholder="Lets get started" id="content"></textarea> <!-- message area -->
+        </div>
+        
+<div class="custom-file">
+    <input type="file" class="custom-file-input" id="image">
+    <label class="custom-file-label" for="customFile">Choose file</label>
+  </div>
+  <br>
+         <div class="row mt-3">
+            <div class="col-auto ml-md-auto">
+                <button class="btn btn-secondary btn-width-lg" onclick="Validate()">Create Post</button> <!-- button hai yeh -->
+            </div>
+			<p><br></p>
+        </div>
+    </div>
+    </div>
+  </body>
+  <script>
+    var x="<%=name%>"
+    i=x.lastIndexOf(" ");
+    s=""
+    if(i!=-1)
+    s=x[0]+x[i+1]
+    else
+    s=x[0]+x[1]
+    s=s.toUpperCase();
+    document.getElementById("initials").innerHTML=s;
+// Add the following code if you want the name of the file appear on select
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
+<script src="validate.js"></script>
+</html>

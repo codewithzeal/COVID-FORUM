@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html style="opacity: 1;filter: blur(0px);">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Home - Brand</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alfa+Slab+One">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,900">
+    <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+    <link rel="stylesheet" href="assets/css/smoothproducts.css">
+    <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+    <link rel="stylesheet" href="/index.css">
+	<script>
+        page=1;
+        limit=2;
+     result={};
+    function nextPage()
+    {
+        page++;
+        if((page*limit-1)>result.length)
+        {
+            page--;
+            return;
+        }
+        else
+        show();
+    }
+    function prevPage()
+    {
+        page--;
+        if((page-1)*limit<0)
+        {
+            page++;
+            return;
+        }
+        else
+        show();
+    }
+    function expand(id)
+{
+    var a=document.getElementById("txt"+id).offsetHeight;
+        if(a==20)
+        {
+            document.getElementById("btn"+id).value="Read Less";
+            document.getElementById("txt"+id).style.height="auto";
+        }
+        else
+        {
+            document.getElementById("btn"+id).value="Read More";
+            document.getElementById("txt"+id).style.height="20px";
+        }
+}
+	function show()
+	{
+    t=1
+    start=(page-1)*limit;
+    document.getElementById("parent").innerHTML=" ";
+    end=page*limit
+    for(i=start;i<result.length&&i<end;i++)
+    {
+        var div=document.createElement("div");
+        div.setAttribute("class","card pt-2 mt-3");
+        div.setAttribute("id","div"+t)
+        div.setAttribute("style","width:100%;background-color:rgb(178,199,230);")
+        h6=document.createElement("h6");
+        h6.innerHTML="~"+result[i].name;
+        img=document.createElement("img");
+        img.setAttribute("id","pic"+t);
+        img.setAttribute("class","card-img-top");
+        img.setAttribute("height","300px");
+        img.setAttribute("src","/"+result[i].file)
+        cbody=document.createElement("div");
+        cbody.setAttribute("class","card-body");
+        cbody.setAttribute("id","body"+t)
+        document.getElementById("parent").appendChild(div);
+        document.getElementById("div"+t).appendChild(h6);
+        document.getElementById("div"+t).appendChild(img);
+        document.getElementById("div"+t).appendChild(cbody);
+        title=document.createElement("h5");
+        title.setAttribute("id","h"+t);
+        document.getElementById("body"+t).appendChild(title);
+        document.getElementById("h"+t).innerHTML=result[i].title
+        text=document.createElement("p");
+        text.setAttribute("id","txt"+t);
+        text.setAttribute("style","height: 20px;overflow: hidden;");
+        document.getElementById("body"+t).appendChild(text);
+        document.getElementById("txt"+t).innerHTML=result[i].text;
+        btn=document.createElement("input");
+        btn.setAttribute("type","button");
+        document.getElementById("body"+t).appendChild(btn);
+        btn.setAttribute("onclick","expand('"+t+"')");
+        btn.setAttribute("value","read more");
+        btn.setAttribute("class","btn btn-primary");
+        btn.setAttribute("id","btn"+t)
+        br=document.createElement("br");
+        document.getElementById("parent").appendChild(br.cloneNode());
+        document.getElementById("parent").appendChild(br.cloneNode());
+        t++;
+    }
+    prevbtn=document.createElement("input");
+        prevbtn.setAttribute("type","button");
+        prevbtn.setAttribute("class","btn btn-primary");
+        prevbtn.setAttribute("value","previous");
+        document.getElementById("parent").appendChild(prevbtn);
+        prevbtn.setAttribute("onclick","prevPage()");
+        nextbtn=document.createElement("input");
+        nextbtn.setAttribute("type","button");
+        nextbtn.setAttribute("class","btn btn-primary ml-3");
+        nextbtn.setAttribute("value","next")
+        document.getElementById("parent").appendChild(nextbtn);
+        nextbtn.setAttribute("onclick","nextPage()");
+    }
+    function postCALL()
+    {
+        $.ajax({
+            url: '/welcome',
+            method: 'POST',
+            contentType: 'application/json',
+            success: function(response) {
+                result=response;
+                show();
+            }
+        });
+    }
+	
+	</script>
+	
+</head>
+
+<body onload="postCALL()">
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+        <div class="container-fluid"><a class="navbar-brand logo" href="#" style="font-family: Raleway, sans-serif;">SHARE IT OUT</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div
+                class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="/welcome">Home</a></li>
+					<li class="nav-item" role="presentation" id="login"><a class="nav-link active" href="/login">Login</a></li>
+					<li class="nav-item" role="presentation" id="signup"><a class="nav-link active" href="/Home">Signup</a></li>
+					<li class="nav-item" role="presentation" id="forum"><a class="nav-link active" href="/forum">FORUM</a></li>
+                    <li class="nav-item" role="presentation" id="wall"><a class="nav-link active" href="/wall">WALL</a></li>
+                    <li class="nav-item" role="presentation" id="confrence"><a class="nav-link active" href="http://localhost:4000/" target="_blank">Confrence</a></li>
+                    <li class="nav-item" role="presentation" id="insert"><a class="nav-link active" href="/postHere" >MakePost</a></li>
+                    <li class="nav-item" role="presentation" id="logout"><a class="nav-link active" href="/destroy">Logout</a></li>
+                </ul>
+        </div>
+        </div>
+    </nav>
+    <main class="page landing-page">
+        <section class="clean-block clean-hero" style="background-image: url(&quot;assets/img/tech/image4.jpg&quot;);color: rgba(25,99,145,0.85);filter: brightness(94%);">
+            <div class="text">
+                <h2 style="font-size: 43px;font-family: ABeeZee, sans-serif;height: 73px;">Share Your Story With World</h2>
+                <p style="font-size: 11px;padding: 55px;">As the Covid cases are growing we have to support each other</p><button class="btn btn-outline-light btn-lg" type="button">Learn More</button></div>
+        </section>
+        <section class="clean-block clean-info dark">
+            <div class="container">
+                <div class="counter"><div class="elfsight-app-bcd0ae96-08d0-4f2f-be71-09da7479a8c7"></div></div>
+            </div>
+        </section>
+
+        <section class="clean-block about-us">
+            <div class="container">
+                <div class="block-heading">
+                    <h1 class="text-info">GOOD POSTS</h1>
+                    <p>Stay indoors. Stay safe. 
+                        Get to know the amazing stuff happening around the world through the means of our <i>good posts</i></p>
+                </div>
+                <div class="row justify-content-center" id="blog-parent" >
+
+					
+                    
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="row" style="margin: 0px;padding: 0px;left: 0px;background-color: rgb(212, 224, 155);">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6 px-0" style="left: 0px; margin: 0px;position: relative;padding: 0px;" id="parent">
+        
+        </div>
+        <div class="col-sm-3"></div>
+        </div>
+        <br>
+
+    </main>
+    <footer class="page-footer dark">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <h5>Get started</h5>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Sign up</a></li>
+                        <li><a href="#">Downloads</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2020 Copyright Text</p>
+        </div>
+    </footer>
+
+
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+    <script src="assets/js/smoothproducts.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script>
+        x= "<%= userType %>";
+        if(x)
+        {
+            document.getElementById("login").style.display="none";
+            document.getElementById("signup").style.display="none";
+            
+        }
+        else
+        {
+            document.getElementById("insert").style.display="none";
+            document.getElementById("forum").style.display="none";
+            document.getElementById("wall").style.display="none";
+            document.getElementById("confrence").style.display="none";
+            document.getElementById("logout").style.display="none";
+        }
+    </script>
+</body>
+</html>
