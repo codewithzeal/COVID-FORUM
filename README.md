@@ -16,4 +16,4 @@
 
 
 
-5. Put a folder named pics inside public folder
+5.Put a folder named pics inside public folder
