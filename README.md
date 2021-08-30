@@ -7,8 +7,7 @@
 
 
 
-
-3.execute npm run devStart command (when in root_app directory)
+3.execute npm run devStart (requires you to have nodemon installed) command (when in root_app directory)
 
 
 
